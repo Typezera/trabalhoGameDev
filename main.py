@@ -12,18 +12,25 @@ pygame.display.set_caption("Obstaculo Demo")
 
 
 reaparecer = 0
-spawn = 0.5
+spawn = 0.6
 obstaculos = []
 player = Player()
 
 inicio = True
+
+pygame.mixer.music.load("msc/ObservingTheStar.ogg")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
+
+background = pygame.image.load("background/vortex.png") #grid_bg.png  vortex.png
+background = pygame.transform.scale(background, (largura,altura))
 
 while inicio:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             inicio = False
 
-    tela.fill((30, 30, 30))
+    tela.blit(background, (0,0))
 
     tempo_atual = time.time()
 
