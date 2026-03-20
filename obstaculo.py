@@ -7,7 +7,7 @@ class Obstaculo:
         self.altura = random.randint(30, 100)
         self.x = random.randint(0, 800 - self.largura)
         self.y = 0
-        self.velocidade = random.uniform(0.2, 0.6)
+        self.velocidade = random.uniform(0.4, 0.8)
         self.cores = [
             (255, 0, 0),     # vermelho
             (255, 255, 0),   # amarelo

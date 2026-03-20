@@ -7,6 +7,7 @@ class Player:
         self.largura = 50
         self.altura = 50
         self.velocidade = 2.5
+        self.hp = 3
 
     def mover (self):
         teclas = pygame.key.get_pressed()

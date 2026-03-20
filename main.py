@@ -5,12 +5,13 @@ from player import Player
 
 pygame.init()
 
+#configurações de tela
 largura = 800
 altura = 600
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Obstaculo Demo")
 
-
+#ajuste para spawn
 reaparecer = 0
 spawn = 0.6
 obstaculos = []
@@ -18,12 +19,21 @@ player = Player()
 
 inicio = True
 
+#mixer para musica
 pygame.mixer.music.load("msc/ObservingTheStar.ogg")
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)
 
+#imagem de fundo
 background = pygame.image.load("background/vortex.png") #grid_bg.png  vortex.png
 background = pygame.transform.scale(background, (largura,altura))
+
+
+# hud
+fonte = pygame.font.SysFont(None, 36)
+
+####tempo de inicio do jogo para o score
+tempo_inicio = time.time()
 
 while inicio:
     for evento in pygame.event.get():
@@ -46,6 +56,16 @@ while inicio:
 
     player.mover()
     player.desenhar(tela)
+
+    ####tempo
+    tempo_vivo = int(time.time() - tempo_inicio)
+
+    #######Hud
+    hp = fonte.render(f"HP: {player.hp}", True, (255, 255, 255))
+    tempo = fonte.render(f"Tempo: {tempo_vivo}s", True, (255, 255, 0))
+
+    tela.blit(hp, (10, 10))
+    tela.blit(tempo, (10, 50))
 
     pygame.display.flip()
 
