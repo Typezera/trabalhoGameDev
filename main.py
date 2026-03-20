@@ -1,4 +1,5 @@
 import pygame
+import time
 from obstaculo import Obstaculo
 from player import Player
 
@@ -9,7 +10,10 @@ altura = 600
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Obstaculo Demo")
 
-obstaculo = Obstaculo()
+
+reaparecer = 0
+spawn = 0.5
+obstaculos = []
 player = Player()
 
 inicio = True
@@ -21,11 +25,17 @@ while inicio:
 
     tela.fill((30, 30, 30))
 
-    obstaculo.mover()
-    obstaculo.desenhar(tela)
+    tempo_atual = time.time()
 
-    if obstaculo.y > altura:
-        obstaculo.restart()
+    if tempo_atual - reaparecer > spawn:
+        obstaculos.append(Obstaculo())
+        reaparecer = tempo_atual
+
+    obstaculos = [obs for obs in obstaculos if obs.y < altura]
+
+    for obs in obstaculos:
+        obs.mover()
+        obs.desenhar(tela)
 
     player.mover()
     player.desenhar(tela)

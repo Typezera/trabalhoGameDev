@@ -3,11 +3,11 @@ import random
 
 class Obstaculo:
     def __init__(self):
-        self.largura = 50
-        self.altura = 50
-        self.x = random.randint(0,750)
+        self.largura = random.randint(30, 100)
+        self.altura = random.randint(30, 100)
+        self.x = random.randint(0, 800 - self.largura)
         self.y = 0
-        self.velocidade = 1
+        self.velocidade = 0.3
 
     def mover(self):
         self.y += self.velocidade
