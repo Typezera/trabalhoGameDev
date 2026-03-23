@@ -24,5 +24,9 @@ class Player:
         if self.x > 800 - self.largura:
             self.x = 800 - self.altura
     
+    def colisao_player(self):
+        return pygame.Rect(self.x, self.y, self.largura, self.altura)
+
+
     def desenhar(self, tela):
         pygame.draw.rect(tela, (0, 255, 0), (self.x, self.y, self.largura, self.altura))

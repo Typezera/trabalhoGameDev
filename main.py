@@ -53,6 +53,15 @@ while inicio:
     for obs in obstaculos:
         obs.mover()
         obs.desenhar(tela)
+    
+
+    for obs in obstaculos[:]:
+        if player.colisao_player().colliderect(obs.colisao_obstaculo()):
+            player.hp -= 1
+            obstaculos.remove(obs)
+
+        if player.hp <= 0:
+            inicio = False
 
     player.mover()
     player.desenhar(tela)

@@ -23,5 +23,9 @@ class Obstaculo:
         self.y = 0
         self.x = random.randint(0, 750)
     
+
+    def colisao_obstaculo(self):
+        return pygame.Rect(self.x, self.y, self.largura, self.altura)
+
     def desenhar(self, tela):
         pygame.draw.rect(tela, self.cor, (self.x, self.y, self.largura, self.altura))
