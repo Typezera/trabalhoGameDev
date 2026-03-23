@@ -2,6 +2,7 @@ import pygame
 import time
 from obstaculo import Obstaculo
 from player import Player
+from game_over import tela_game_over, verificar_restart, sair_jogo
 
 pygame.init()
 
@@ -35,6 +36,9 @@ fonte = pygame.font.SysFont(None, 36)
 ####tempo de inicio do jogo para o score
 tempo_inicio = time.time()
 
+#######Game Over
+game_over = False
+
 while inicio:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -57,12 +61,28 @@ while inicio:
 
     for obs in obstaculos[:]:
         if player.colisao_player().colliderect(obs.colisao_obstaculo()):
-            player.hp -= 1
+            player.tomar_dano()
             obstaculos.remove(obs)
 
         if player.hp <= 0:
-            inicio = False
+            game_over = True
 
+
+    if game_over:
+        tela_game_over(tela, fonte)
+
+        if verificar_restart():
+            player = Player()
+            obstaculos = []
+            tempo_inicio = time.time()
+            game_over = False
+        
+        if sair_jogo():
+            inicio = False
+        
+        continue
+    
+    player.atualizar_dano()
     player.mover()
     player.desenhar(tela)
 
