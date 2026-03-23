@@ -4,9 +4,10 @@ from obstaculo import Obstaculo
 from player import Player
 from game_over import tela_game_over, verificar_restart, sair_jogo
 from score import salvar_recorde, carregar_recorde
+from menu import tela_menu
 
 pygame.init()
-
+menu = True
 #configurações de tela
 largura = 800
 altura = 600
@@ -50,9 +51,32 @@ player = Player()
 tempo_final = 0
 
 while inicio:
+
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             inicio = False
+
+        if evento.type == pygame.KEYDOWN:
+            if menu and evento.key == pygame.K_RETURN:
+                player = Player()
+                obstaculos = []
+                reaparecer = 0
+                tempo_inicio = time.time()
+                game_over = False
+
+    if menu:
+        tela_menu(tela, fonte)
+        teclas = pygame.key.get_pressed()
+        if teclas[pygame.K_RETURN]:
+            menu = False
+
+            player = Player()
+            obstaculos = []
+            reaparecer = 0
+            tempo_inicio = time.time()
+            game_over = False
+        continue
+
 
     if game_over:
         tela_game_over(tela, fonte, tempo_final)
