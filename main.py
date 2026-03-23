@@ -46,10 +46,30 @@ game_over = False
 reaparecer = 0
 player = Player()
 
+
+tempo_final = 0
+
 while inicio:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             inicio = False
+
+    if game_over:
+        tela_game_over(tela, fonte, tempo_final)
+
+        if verificar_restart():
+            player = Player()
+            obstaculos = []
+            tempo_final = 0
+            tempo_inicio = time.time()
+            game_over = False
+        
+        if sair_jogo():
+            inicio = False
+        
+        continue
+
+
 
     tela.blit(background, (0,0))
 
@@ -79,20 +99,6 @@ while inicio:
             tempo_final = int(time.time() - tempo_inicio)
             salvar_recorde(tempo_final)
             game_over = True
-
-    if game_over:
-        tela_game_over(tela, fonte)
-
-        if verificar_restart():
-            player = Player()
-            obstaculos = []
-            tempo_inicio = time.time()
-            game_over = False
-        
-        if sair_jogo():
-            inicio = False
-        
-        continue
     
     player.atualizar_dano()
     player.mover()

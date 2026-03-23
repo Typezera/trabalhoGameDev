@@ -1,15 +1,25 @@
 import pygame
 
-def tela_game_over(tela, fonte):
+def tela_game_over(tela, fonte, tempo_final):
     tela.fill((0,0,0))
 
-    texto1 = fonte.render("GAME OVER", True, (255, 0, 0))
-    texto2 = fonte.render("Pressione R para reiniciar", True, (255,255,255))
-    texto3 = fonte.render("Pressione Q para sair do jogo!", True, (255, 255, 255))
+    largura = tela.get_width()
+    altura = tela.get_height()
 
-    tela.blit(texto1, (300, 250))
-    tela.blit(texto2, (200,300))
-    tela.blit(texto3, (100,400))
+    texto1 = fonte.render("GAME OVER", True, (255, 0, 0))
+    texto2 = fonte.render(f"Tempo sobrevivido: {tempo_final}s", True, (255, 255, 0))
+    texto3 = fonte.render("Pressione R para reiniciar", True, (255,255,255))
+    texto4 = fonte.render("Pressione Q para sair do jogo!", True, (255, 255, 255))
+
+    rect1 = texto1.get_rect(center=(largura // 2, altura // 2 - 60))
+    rect2 = texto2.get_rect(center=(largura // 2, altura // 2))
+    rect3 = texto3.get_rect(center=(largura // 2, altura // 2 + 50))
+    rect4 = texto4.get_rect(center=(largura // 2, altura // 2 + 100))
+
+    tela.blit(texto1, rect1)
+    tela.blit(texto2, rect2)
+    tela.blit(texto3, rect3)
+    tela.blit(texto4, rect4)
 
     pygame.display.flip()
 
