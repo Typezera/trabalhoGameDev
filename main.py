@@ -3,6 +3,7 @@ import time
 from obstaculo import Obstaculo
 from player import Player
 from game_over import tela_game_over, verificar_restart, sair_jogo
+from score import salvar_recorde, carregar_recorde
 
 pygame.init()
 
@@ -39,6 +40,9 @@ tempo_inicio = time.time()
 #######Game Over
 game_over = False
 
+################Dificuldade
+tempo_vivo = time.time() - tempo_inicio
+
 while inicio:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -67,6 +71,8 @@ while inicio:
         if player.hp <= 0:
             game_over = True
 
+    tempo_final = int(time.time() - tempo_inicio)
+    salvar_recorde(tempo_final)
 
     if game_over:
         tela_game_over(tela, fonte)
@@ -92,6 +98,9 @@ while inicio:
     #######Hud
     hp = fonte.render(f"HP: {player.hp}", True, (255, 255, 255))
     tempo = fonte.render(f"Tempo: {tempo_vivo}s", True, (255, 255, 0))
+    recorde = carregar_recorde()
+    texto_recorde = fonte.render(f"Recorde: {recorde}s", True, (255, 255, 255))
+    tela.blit(texto_recorde, (10, 90))
 
     tela.blit(hp, (10, 10))
     tela.blit(tempo, (10, 50))
