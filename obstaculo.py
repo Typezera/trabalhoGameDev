@@ -2,12 +2,13 @@ import pygame
 import random
 
 class Obstaculo:
-    def __init__(self):
-        self.largura = random.randint(30, 100)
-        self.altura = random.randint(30, 100)
+    def __init__(self, dificuldade):
+        base = 30 + int(dificuldade * 2)
+        self.largura = random.randint(base, base + 50)
+        self.altura = random.randint(base, base + 50)
         self.x = random.randint(0, 800 - self.largura)
         self.y = 0
-        self.velocidade = random.uniform(0.4, 0.8)
+        self.velocidade = random.uniform(0.4, 0.8) + (dificuldade * 0.5)
         self.cores = [
             (255, 0, 0),     # vermelho
             (255, 255, 0),   # amarelo

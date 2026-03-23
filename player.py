@@ -7,7 +7,7 @@ class Player:
         self.y = 500
         self.largura = 50
         self.altura = 50
-        self.velocidade = 2.5
+        self.velocidade = 2.8
         self.hp = 3
         self.dano = False
         self.tempo_dano = 0

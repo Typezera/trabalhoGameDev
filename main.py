@@ -13,13 +13,14 @@ altura = 600
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Obstaculo Demo")
 
-#ajuste para spawn
-reaparecer = 0
-spawn = 0.6
 obstaculos = []
-player = Player()
 
 inicio = True
+
+###Som de dano
+som_dano = pygame.mixer.Sound("msc/hit01.wav")
+som_dano.set_volume(0.5)
+
 
 #mixer para musica
 pygame.mixer.music.load("msc/ObservingTheStar.ogg")
@@ -40,8 +41,10 @@ tempo_inicio = time.time()
 #######Game Over
 game_over = False
 
-################Dificuldade
-tempo_vivo = time.time() - tempo_inicio
+
+#ajuste para spawn
+reaparecer = 0
+player = Player()
 
 while inicio:
     for evento in pygame.event.get():
@@ -51,9 +54,12 @@ while inicio:
     tela.blit(background, (0,0))
 
     tempo_atual = time.time()
+    tempo_vivo = time.time() - tempo_inicio
+    dificuldade = int(tempo_vivo / 10) ## a cada 50s aumenta a dificuldade
+    spawn = max(0.2, 0.6 - (tempo_vivo * 0.01))
 
     if tempo_atual - reaparecer > spawn:
-        obstaculos.append(Obstaculo())
+        obstaculos.append(Obstaculo(dificuldade))
         reaparecer = tempo_atual
 
     obstaculos = [obs for obs in obstaculos if obs.y < altura]
@@ -66,13 +72,13 @@ while inicio:
     for obs in obstaculos[:]:
         if player.colisao_player().colliderect(obs.colisao_obstaculo()):
             player.tomar_dano()
+            som_dano.play()
             obstaculos.remove(obs)
 
         if player.hp <= 0:
+            tempo_final = int(time.time() - tempo_inicio)
+            salvar_recorde(tempo_final)
             game_over = True
-
-    tempo_final = int(time.time() - tempo_inicio)
-    salvar_recorde(tempo_final)
 
     if game_over:
         tela_game_over(tela, fonte)
